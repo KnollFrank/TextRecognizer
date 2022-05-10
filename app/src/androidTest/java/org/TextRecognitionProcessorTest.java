@@ -1,5 +1,6 @@
 package org;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 
@@ -14,7 +15,6 @@ import com.google.mlkit.vision.demo.java.textdetector.TextRecognitionProcessor;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
@@ -22,7 +22,6 @@ import java.util.concurrent.CountDownLatch;
 public class TextRecognitionProcessorTest {
 
     @Test
-    // @UiThreadTest
     public void shouldDetectTextInImage() throws InterruptedException {
         // Given
         final Context context = TestUtils.getContext();
