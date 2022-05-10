@@ -134,16 +134,7 @@ public class PoseDetectorProcessor
 
   @Override
   protected void onSuccess(
-      @NonNull PoseWithClassification poseWithClassification,
-      @NonNull GraphicOverlay graphicOverlay) {
-    graphicOverlay.add(
-        new PoseGraphic(
-            graphicOverlay,
-            poseWithClassification.pose,
-            showInFrameLikelihood,
-            visualizeZ,
-            rescaleZForVisualization,
-            poseWithClassification.classificationResult));
+      @NonNull PoseWithClassification poseWithClassification) {
   }
 
   @Override

@@ -62,11 +62,9 @@ public class TextRecognitionProcessor extends VisionProcessorBase<Text> {
   }
 
   @Override
-  protected void onSuccess(@NonNull Text text, @NonNull GraphicOverlay graphicOverlay) {
+  protected void onSuccess(@NonNull Text text) {
     Log.d(TAG, "On-device Text detection successful");
     logExtrasForTesting(text);
-    graphicOverlay.add(
-        new TextGraphic(graphicOverlay, text, shouldGroupRecognizedTextInBlocks, showLanguageTag));
   }
 
   private static void logExtrasForTesting(Text text) {

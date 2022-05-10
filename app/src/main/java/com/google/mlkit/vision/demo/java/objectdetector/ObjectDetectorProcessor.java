@@ -54,10 +54,7 @@ public class ObjectDetectorProcessor extends VisionProcessorBase<List<DetectedOb
 
   @Override
   protected void onSuccess(
-      @NonNull List<DetectedObject> results, @NonNull GraphicOverlay graphicOverlay) {
-    for (DetectedObject object : results) {
-      graphicOverlay.add(new ObjectGraphic(graphicOverlay, object));
-    }
+      @NonNull List<DetectedObject> results) {
   }
 
   @Override

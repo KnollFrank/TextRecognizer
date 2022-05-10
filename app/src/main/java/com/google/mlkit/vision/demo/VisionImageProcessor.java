@@ -25,7 +25,7 @@ import java.nio.ByteBuffer;
 public interface VisionImageProcessor {
 
   /** Processes a bitmap image. */
-  void processBitmap(Bitmap bitmap, GraphicOverlay graphicOverlay);
+  void processBitmap(Bitmap bitmap);
 
   /** Processes ByteBuffer image data, e.g. used for Camera1 live preview case. */
   void processByteBuffer(

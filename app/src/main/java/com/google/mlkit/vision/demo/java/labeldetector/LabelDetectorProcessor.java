@@ -54,8 +54,7 @@ public class LabelDetectorProcessor extends VisionProcessorBase<List<ImageLabel>
 
   @Override
   protected void onSuccess(
-      @NonNull List<ImageLabel> labels, @NonNull GraphicOverlay graphicOverlay) {
-    graphicOverlay.add(new LabelGraphic(graphicOverlay, labels));
+      @NonNull List<ImageLabel> labels) {
     logExtrasForTesting(labels);
   }
 

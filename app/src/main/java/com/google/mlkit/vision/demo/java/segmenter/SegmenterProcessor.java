@@ -61,8 +61,7 @@ public class SegmenterProcessor extends VisionProcessorBase<SegmentationMask> {
 
   @Override
   protected void onSuccess(
-      @NonNull SegmentationMask segmentationMask, @NonNull GraphicOverlay graphicOverlay) {
-    graphicOverlay.add(new SegmentationGraphic(graphicOverlay, segmentationMask));
+      @NonNull SegmentationMask segmentationMask) {
   }
 
   @Override

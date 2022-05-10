@@ -355,7 +355,7 @@ class StillImageActivity : AppCompatActivity() {
         graphicOverlay!!.setImageSourceInfo(
           resizedBitmap.width, resizedBitmap.height, /* isFlipped= */false
         )
-        imageProcessor!!.processBitmap(resizedBitmap, graphicOverlay)
+        imageProcessor!!.processBitmap(resizedBitmap)
       } else {
         Log.e(
           TAG,
