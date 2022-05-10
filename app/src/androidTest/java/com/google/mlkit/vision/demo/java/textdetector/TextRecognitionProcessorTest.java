@@ -1,4 +1,4 @@
-package org;
+package com.google.mlkit.vision.demo.java.textdetector;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,11 +11,11 @@ import android.graphics.BitmapFactory;
 import androidx.annotation.NonNull;
 
 import com.google.mlkit.vision.demo.R;
-import com.google.mlkit.vision.demo.java.textdetector.TextRecognitionProcessor;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import org.junit.Test;
+import org.textrecognizer.TestUtils;
 
 import java.util.concurrent.CountDownLatch;
 

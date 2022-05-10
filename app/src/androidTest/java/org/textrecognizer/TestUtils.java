@@ -1,4 +1,4 @@
-package org;
+package org.textrecognizer;
 
 import android.content.Context;
 
