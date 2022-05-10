@@ -10,13 +10,14 @@ import android.graphics.BitmapFactory;
 
 import androidx.annotation.NonNull;
 
-import com.google.mlkit.vision.demo.R;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import org.junit.Test;
 import org.textrecognizer.TestUtils;
+import org.textrecognizer.common.AssetsUtils;
 
+import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
 public class TextRecognitionProcessorTest {
@@ -35,7 +36,7 @@ public class TextRecognitionProcessorTest {
                     protected void onSuccess(@NonNull final Text text) {
                         super.onSuccess(text);
                         // Then
-                        assertThat(text.getText(), is("9 8\n5 5\n8 F"));
+                        assertThat(text.getText(), is("9\n5\n8\nF"));
                         signal.countDown();
                     }
 
@@ -46,7 +47,11 @@ public class TextRecognitionProcessorTest {
                         fail();
                     }
                 };
-        final Bitmap captcha = BitmapFactory.decodeResource(context.getResources(), R.raw.captcha_image_4);
+        final Bitmap captcha =
+                BitmapFactory.decodeStream(
+                        AssetsUtils.open(
+                                context.getAssets(),
+                                new File("captchas", "captcha_image_4.jpeg")));
 
         // When
         imageProcessor.processBitmap(captcha);
