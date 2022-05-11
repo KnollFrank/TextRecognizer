@@ -18,24 +18,17 @@ package com.google.mlkit.vision.demo.kotlin
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
-import android.widget.ToggleButton
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.common.annotation.KeepName
 import com.google.mlkit.common.model.LocalModel
 import com.google.mlkit.vision.demo.CameraSource
 import com.google.mlkit.vision.demo.CameraSourcePreview
 import com.google.mlkit.vision.demo.GraphicOverlay
 import com.google.mlkit.vision.demo.R
-import com.google.mlkit.vision.demo.kotlin.barcodescanner.BarcodeScannerProcessor
 import com.google.mlkit.vision.demo.kotlin.facedetector.FaceDetectorProcessor
 import com.google.mlkit.vision.demo.kotlin.labeldetector.LabelDetectorProcessor
 import com.google.mlkit.vision.demo.kotlin.objectdetector.ObjectDetectorProcessor
@@ -53,7 +46,6 @@ import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.IOException
-import java.util.ArrayList
 
 /** Live preview demo for ML Kit APIs. */
 @KeepName
@@ -221,10 +213,6 @@ class LivePreviewActivity :
           cameraSource!!.setMachineLearningFrameProcessor(
             FaceDetectorProcessor(this, faceDetectorOptions)
           )
-        }
-        BARCODE_SCANNING -> {
-          Log.i(TAG, "Using Barcode Detector Processor")
-          cameraSource!!.setMachineLearningFrameProcessor(BarcodeScannerProcessor(this))
         }
         IMAGE_LABELING -> {
           Log.i(TAG, "Using Image Label Detector Processor")

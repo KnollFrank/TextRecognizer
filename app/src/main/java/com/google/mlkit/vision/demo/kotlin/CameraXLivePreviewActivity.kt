@@ -19,23 +19,13 @@ package com.google.mlkit.vision.demo.kotlin
 import android.content.Intent
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
-import android.widget.ToggleButton
 import androidx.annotation.RequiresApi
-import androidx.camera.core.CameraInfoUnavailableException
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
@@ -48,7 +38,6 @@ import com.google.mlkit.vision.demo.CameraXViewModel
 import com.google.mlkit.vision.demo.GraphicOverlay
 import com.google.mlkit.vision.demo.R
 import com.google.mlkit.vision.demo.VisionImageProcessor
-import com.google.mlkit.vision.demo.kotlin.barcodescanner.BarcodeScannerProcessor
 import com.google.mlkit.vision.demo.kotlin.facedetector.FaceDetectorProcessor
 import com.google.mlkit.vision.demo.kotlin.labeldetector.LabelDetectorProcessor
 import com.google.mlkit.vision.demo.kotlin.objectdetector.ObjectDetectorProcessor
@@ -65,7 +54,6 @@ import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
 import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
 import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import java.util.ArrayList
 
 /** Live preview demo app for ML Kit APIs using CameraX. */
 @KeepName
@@ -236,7 +224,7 @@ class CameraXLivePreviewActivity :
       builder.setTargetResolution(targetResolution)
     }
     previewUseCase = builder.build()
-    previewUseCase!!.setSurfaceProvider(previewView!!.getSurfaceProvider())
+    previewUseCase!!.setSurfaceProvider(previewView!!.surfaceProvider)
     cameraProvider!!.bindToLifecycle(/* lifecycleOwner= */ this, cameraSelector!!, previewUseCase)
   }
 
@@ -301,10 +289,6 @@ class CameraXLivePreviewActivity :
             Log.i(TAG, "Using Face Detector Processor")
             val faceDetectorOptions = PreferenceUtils.getFaceDetectorOptions(this)
             FaceDetectorProcessor(this, faceDetectorOptions)
-          }
-          BARCODE_SCANNING -> {
-            Log.i(TAG, "Using Barcode Detector Processor")
-            BarcodeScannerProcessor(this)
           }
           IMAGE_LABELING -> {
             Log.i(TAG, "Using Image Label Detector Processor")
