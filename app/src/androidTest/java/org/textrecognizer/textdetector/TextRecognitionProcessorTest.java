@@ -1,4 +1,4 @@
-package com.google.mlkit.vision.demo.java.textdetector;
+package org.textrecognizer.textdetector;
 
 import static org.junit.Assert.fail;
 import static org.textrecognizer.common.IOUtils.getFileOutputStream;

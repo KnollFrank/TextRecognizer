@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo;
+package org.textrecognizer;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.google.common.base.Preconditions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +72,7 @@ public class GraphicOverlay extends View {
    * instances to the overlay using {@link GraphicOverlay#add(Graphic)}.
    */
   public abstract static class Graphic {
-    private GraphicOverlay overlay;
+    private final GraphicOverlay overlay;
 
     public Graphic(GraphicOverlay overlay) {
       this.overlay = overlay;

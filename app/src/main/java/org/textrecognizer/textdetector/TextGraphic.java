@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo.java.textdetector;
+package org.textrecognizer.textdetector;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -24,12 +24,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
-import com.google.mlkit.vision.demo.GraphicOverlay;
-import com.google.mlkit.vision.demo.GraphicOverlay.Graphic;
+
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.Text.Element;
 import com.google.mlkit.vision.text.Text.Line;
 import com.google.mlkit.vision.text.Text.TextBlock;
+
+import org.textrecognizer.GraphicOverlay;
+import org.textrecognizer.GraphicOverlay.Graphic;
+
 import java.util.Arrays;
 
 /**

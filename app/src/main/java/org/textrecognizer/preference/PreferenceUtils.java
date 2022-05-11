@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo.preference;
+package org.textrecognizer.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;

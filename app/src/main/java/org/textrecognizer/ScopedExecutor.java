@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo;
+package org.textrecognizer;
 
 import androidx.annotation.NonNull;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
 

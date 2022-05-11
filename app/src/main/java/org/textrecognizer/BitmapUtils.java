@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo;
+package org.textrecognizer;
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;

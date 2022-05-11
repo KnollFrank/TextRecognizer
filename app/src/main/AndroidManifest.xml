@@ -24,7 +24,7 @@
             android:value="ocr" />
 
         <activity
-            android:name=".EntryChoiceActivity"
+            android:name="org.textrecognizer.EntryChoiceActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
             <intent-filter>

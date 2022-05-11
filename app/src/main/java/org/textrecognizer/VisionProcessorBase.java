@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo.java;
+package org.textrecognizer;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -37,11 +37,6 @@ import com.google.android.odml.image.ByteBufferMlImageBuilder;
 import com.google.android.odml.image.MlImage;
 import com.google.mlkit.common.MlKitException;
 import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.demo.BitmapUtils;
-import com.google.mlkit.vision.demo.FrameMetadata;
-import com.google.mlkit.vision.demo.GraphicOverlay;
-import com.google.mlkit.vision.demo.ScopedExecutor;
-import com.google.mlkit.vision.demo.VisionImageProcessor;
 
 import java.nio.ByteBuffer;
 import java.util.Timer;

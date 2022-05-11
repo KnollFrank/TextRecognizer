@@ -14,23 +14,26 @@
  * limitations under the License.
  */
 
-package com.google.mlkit.vision.demo.java.textdetector;
+package org.textrecognizer.textdetector;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.demo.GraphicOverlay;
-import com.google.mlkit.vision.demo.java.VisionProcessorBase;
-import com.google.mlkit.vision.demo.preference.PreferenceUtils;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.Text.Element;
 import com.google.mlkit.vision.text.Text.Line;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface;
+
+import org.textrecognizer.VisionProcessorBase;
+import org.textrecognizer.preference.PreferenceUtils;
+
 import java.util.List;
 
 /** Processor for the text detector demo. */
