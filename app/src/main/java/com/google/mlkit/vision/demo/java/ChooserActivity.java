@@ -22,7 +22,6 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.StrictMode;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +30,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.mlkit.vision.demo.BuildConfig;
 import com.google.mlkit.vision.demo.R;
 
@@ -47,9 +49,7 @@ public final class ChooserActivity extends AppCompatActivity
           }
           : new Class<?>[] {
             LivePreviewActivity.class,
-            StillImageActivity.class,
-            CameraXLivePreviewActivity.class,
-            CameraXSourceDemoActivity.class,
+              StillImageActivity.class
           };
 
   private static final int[] DESCRIPTION_IDS =
