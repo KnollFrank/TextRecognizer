@@ -1,12 +1,12 @@
 package com.google.mlkit.vision.demo.java.textdetector;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
+import static org.textrecognizer.common.IOUtils.getFileOutputStream;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -16,8 +16,10 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import org.junit.Test;
 import org.textrecognizer.TestUtils;
 import org.textrecognizer.common.AssetsUtils;
+import org.textrecognizer.common.IOUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.concurrent.CountDownLatch;
 
 public class TextRecognitionProcessorTest {
@@ -36,7 +38,10 @@ public class TextRecognitionProcessorTest {
                     protected void onSuccess(@NonNull final Text text) {
                         super.onSuccess(text);
                         // Then
-                        assertThat(text.getText(), is("9\n5\n8\nF"));
+                        Log.i(this.getClass().getSimpleName(), "FKK-TEXT: " + text.getText());
+                        final FileOutputStream fileOutputStream = getFileOutputStream(new File(context.getFilesDir(), "captcha_image.txt"));
+                        IOUtils.persist(text.getText(), fileOutputStream);
+                        // assertThat(text.getText(), is("9\n5\n8\nF"));
                         signal.countDown();
                     }
 
@@ -51,7 +56,7 @@ public class TextRecognitionProcessorTest {
                 BitmapFactory.decodeStream(
                         AssetsUtils.open(
                                 context.getAssets(),
-                                new File("captchas", "captcha_image_4.jpeg")));
+                                new File("captchas", "captcha_image.jpeg")));
 
         // When
         imageProcessor.processBitmap(captcha);

@@ -1,0 +1,2 @@
+- cd AndroidStudioProjects/TextRecognizer/
+- jupyter notebook TextRecognizer.ipynb
