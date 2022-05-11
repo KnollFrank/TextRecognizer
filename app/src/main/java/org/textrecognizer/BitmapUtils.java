@@ -16,141 +16,68 @@
 
 package org.textrecognizer;
 
-import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.exifinterface.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 
-/** Utils functions for bitmap conversions. */
+/**
+ * Utils functions for bitmap conversions.
+ */
 public class BitmapUtils {
-  private static final String TAG = "BitmapUtils";
 
-  /** Converts NV21 format byte buffer to bitmap. */
-  @Nullable
-  public static Bitmap getBitmap(ByteBuffer data, FrameMetadata metadata) {
-    data.rewind();
-    byte[] imageInBuffer = new byte[data.limit()];
-    data.get(imageInBuffer, 0, imageInBuffer.length);
-    try {
-      YuvImage image =
-          new YuvImage(
-              imageInBuffer, ImageFormat.NV21, metadata.getWidth(), metadata.getHeight(), null);
-      ByteArrayOutputStream stream = new ByteArrayOutputStream();
-      image.compressToJpeg(new Rect(0, 0, metadata.getWidth(), metadata.getHeight()), 80, stream);
+    /**
+     * Converts NV21 format byte buffer to bitmap.
+     */
+    @Nullable
+    public static Bitmap getBitmap(ByteBuffer data, FrameMetadata metadata) {
+        data.rewind();
+        byte[] imageInBuffer = new byte[data.limit()];
+        data.get(imageInBuffer, 0, imageInBuffer.length);
+        try {
+            YuvImage image =
+                    new YuvImage(
+                            imageInBuffer, ImageFormat.NV21, metadata.getWidth(), metadata.getHeight(), null);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            image.compressToJpeg(new Rect(0, 0, metadata.getWidth(), metadata.getHeight()), 80, stream);
 
-      Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
+            Bitmap bmp = BitmapFactory.decodeByteArray(stream.toByteArray(), 0, stream.size());
 
-      stream.close();
-      return rotateBitmap(bmp, metadata.getRotation(), false, false);
-    } catch (Exception e) {
-      Log.e("VisionProcessorBase", "Error: " + e.getMessage());
-    }
-    return null;
-  }
-
-  /** Rotates a bitmap if it is converted from a bytebuffer. */
-  private static Bitmap rotateBitmap(
-      Bitmap bitmap, int rotationDegrees, boolean flipX, boolean flipY) {
-    Matrix matrix = new Matrix();
-
-    // Rotate the image back to straight.
-    matrix.postRotate(rotationDegrees);
-
-    // Mirror the image along the X or Y axis.
-    matrix.postScale(flipX ? -1.0f : 1.0f, flipY ? -1.0f : 1.0f);
-    Bitmap rotatedBitmap =
-        Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-    // Recycle the old bitmap if it has changed.
-    if (rotatedBitmap != bitmap) {
-      bitmap.recycle();
-    }
-    return rotatedBitmap;
-  }
-
-  @Nullable
-  public static Bitmap getBitmapFromContentUri(ContentResolver contentResolver, Uri imageUri)
-      throws IOException {
-    Bitmap decodedBitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri);
-    if (decodedBitmap == null) {
-      return null;
-    }
-    int orientation = getExifOrientationTag(contentResolver, imageUri);
-
-    int rotationDegrees = 0;
-    boolean flipX = false;
-    boolean flipY = false;
-    // See e.g. https://magnushoff.com/articles/jpeg-orientation/ for a detailed explanation on each
-    // orientation.
-    switch (orientation) {
-      case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-        flipX = true;
-        break;
-      case ExifInterface.ORIENTATION_ROTATE_90:
-        rotationDegrees = 90;
-        break;
-      case ExifInterface.ORIENTATION_TRANSPOSE:
-        rotationDegrees = 90;
-        flipX = true;
-        break;
-      case ExifInterface.ORIENTATION_ROTATE_180:
-        rotationDegrees = 180;
-        break;
-      case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-        flipY = true;
-        break;
-      case ExifInterface.ORIENTATION_ROTATE_270:
-        rotationDegrees = -90;
-        break;
-      case ExifInterface.ORIENTATION_TRANSVERSE:
-        rotationDegrees = -90;
-        flipX = true;
-        break;
-      case ExifInterface.ORIENTATION_UNDEFINED:
-      case ExifInterface.ORIENTATION_NORMAL:
-      default:
-        // No transformations necessary in this case.
+            stream.close();
+            return rotateBitmap(bmp, metadata.getRotation(), false, false);
+        } catch (Exception e) {
+            Log.e("VisionProcessorBase", "Error: " + e.getMessage());
+        }
+        return null;
     }
 
-    return rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY);
-  }
+    /**
+     * Rotates a bitmap if it is converted from a bytebuffer.
+     */
+    private static Bitmap rotateBitmap(
+            Bitmap bitmap, int rotationDegrees, boolean flipX, boolean flipY) {
+        Matrix matrix = new Matrix();
 
-  private static int getExifOrientationTag(ContentResolver resolver, Uri imageUri) {
-    // We only support parsing EXIF orientation tag from local file on the device.
-    // See also:
-    // https://android-developers.googleblog.com/2016/12/introducing-the-exifinterface-support-library.html
-    if (!ContentResolver.SCHEME_CONTENT.equals(imageUri.getScheme())
-        && !ContentResolver.SCHEME_FILE.equals(imageUri.getScheme())) {
-      return 0;
+        // Rotate the image back to straight.
+        matrix.postRotate(rotationDegrees);
+
+        // Mirror the image along the X or Y axis.
+        matrix.postScale(flipX ? -1.0f : 1.0f, flipY ? -1.0f : 1.0f);
+        Bitmap rotatedBitmap =
+                Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+        // Recycle the old bitmap if it has changed.
+        if (rotatedBitmap != bitmap) {
+            bitmap.recycle();
+        }
+        return rotatedBitmap;
     }
-
-    ExifInterface exif;
-    try (InputStream inputStream = resolver.openInputStream(imageUri)) {
-      if (inputStream == null) {
-        return 0;
-      }
-
-      exif = new ExifInterface(inputStream);
-    } catch (IOException e) {
-      Log.e(TAG, "failed to open file to read rotation meta data: " + imageUri, e);
-      return 0;
-    }
-
-    return exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-  }
-
 }

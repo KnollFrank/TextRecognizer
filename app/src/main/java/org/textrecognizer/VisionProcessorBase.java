@@ -138,7 +138,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                             .setRotation(frameMetadata.getRotation())
                             .build();
 
-            requestDetectInImage(mlImage, graphicOverlay, bitmap, /* shouldShowFps= */ true, frameStartMs)
+            requestDetectInImage(mlImage, bitmap, /* shouldShowFps= */ true, frameStartMs)
                     .addOnSuccessListener(executor, results -> processLatestImage(graphicOverlay));
 
             // This is optional. Java Garbage collection can also close it eventually.
@@ -171,7 +171,6 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
 
     private Task<T> requestDetectInImage(
             final MlImage image,
-            final GraphicOverlay graphicOverlay,
             @Nullable final Bitmap originalCameraImage,
             boolean shouldShowFps,
             long frameStartMs) {
