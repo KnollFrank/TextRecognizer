@@ -42,7 +42,6 @@ import com.google.mlkit.vision.demo.FrameMetadata;
 import com.google.mlkit.vision.demo.GraphicOverlay;
 import com.google.mlkit.vision.demo.ScopedExecutor;
 import com.google.mlkit.vision.demo.VisionImageProcessor;
-import com.google.mlkit.vision.demo.preference.PreferenceUtils;
 
 import java.nio.ByteBuffer;
 import java.util.Timer;
@@ -145,12 +144,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
             ByteBuffer data, final FrameMetadata frameMetadata, final GraphicOverlay graphicOverlay) {
         long frameStartMs = SystemClock.elapsedRealtime();
 
-        // If live viewport is on (that is the underneath surface view takes care of the camera preview
-        // drawing), skip the unnecessary bitmap creation that used for the manual preview drawing.
-        Bitmap bitmap =
-                PreferenceUtils.isCameraLiveViewportEnabled(graphicOverlay.getContext())
-                        ? null
-                        : BitmapUtils.getBitmap(data, frameMetadata);
+        Bitmap bitmap = BitmapUtils.getBitmap(data, frameMetadata);
 
         if (isMlImageEnabled(graphicOverlay.getContext())) {
             MlImage mlImage =

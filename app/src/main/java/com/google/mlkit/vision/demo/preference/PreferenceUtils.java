@@ -30,15 +30,12 @@ import com.google.mlkit.vision.demo.R;
  */
 public class PreferenceUtils {
 
-    private static final int POSE_DETECTOR_PERFORMANCE_MODE_FAST = 1;
-
     static void saveString(Context context, @StringRes int prefKeyId, @Nullable String value) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(context.getString(prefKeyId), value)
                 .apply();
     }
-
 
     public static boolean shouldGroupRecognizedTextInBlocks(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -49,12 +46,6 @@ public class PreferenceUtils {
     public static boolean showLanguageTag(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String prefKey = context.getString(R.string.pref_key_show_language_tag);
-        return sharedPreferences.getBoolean(prefKey, false);
-    }
-
-    public static boolean isCameraLiveViewportEnabled(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String prefKey = context.getString(R.string.pref_key_camera_live_viewport);
         return sharedPreferences.getBoolean(prefKey, false);
     }
 
