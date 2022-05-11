@@ -4,7 +4,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.google.mlkit.vision.demo"
+        applicationId "org.textrecognizer"
         minSdkVersion 19
         multiDexEnabled true
         targetSdkVersion 31

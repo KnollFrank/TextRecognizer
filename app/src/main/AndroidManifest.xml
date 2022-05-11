@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.google.mlkit.vision.demo"
+    package="org.textrecognizer"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,7 +20,7 @@
         <!-- Optional: Add it to automatically download ML model to device after
           your app is installed.-->
         <meta-data
-            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:name="org.textrecognizer.DEPENDENCIES"
             android:value="ocr" />
 
         <activity

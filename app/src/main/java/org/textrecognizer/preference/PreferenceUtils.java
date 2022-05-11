@@ -23,7 +23,7 @@ import android.preference.PreferenceManager;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
-import com.google.mlkit.vision.demo.R;
+import org.textrecognizer.R;
 
 /**
  * Utility class to retrieve shared preferences.
