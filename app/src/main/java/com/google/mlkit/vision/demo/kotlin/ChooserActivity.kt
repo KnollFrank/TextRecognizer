@@ -90,11 +90,9 @@ class ChooserActivity :
         private val CLASSES =
             if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
                 arrayOf<Class<*>>(
-                    StillImageActivity::class.java,
                 )
             else
                 arrayOf<Class<*>>(
-                    StillImageActivity::class.java
                 )
         private val DESCRIPTION_IDS =
             if (VERSION.SDK_INT < VERSION_CODES.LOLLIPOP)
