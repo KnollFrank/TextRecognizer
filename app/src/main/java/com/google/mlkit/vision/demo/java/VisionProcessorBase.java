@@ -77,7 +77,6 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
 
     // Frame count that have been processed so far in an one second interval to calculate FPS.
     private int frameProcessedInOneSecondInterval = 0;
-    private int framesPerSecond = 0;
 
     // To keep the latest images and its metadata.
     @GuardedBy("this")
@@ -99,7 +98,6 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                 new TimerTask() {
                     @Override
                     public void run() {
-                        framesPerSecond = frameProcessedInOneSecondInterval;
                         frameProcessedInOneSecondInterval = 0;
                     }
                 },
@@ -117,17 +115,6 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                 /* originalCameraImage= */ null,
                 /* shouldShowFps= */ false,
                 frameStartMs);
-    }
-
-    // -----------------Code for processing live preview frame from Camera1 API-----------------------
-    @Override
-    public synchronized void processByteBuffer(
-            ByteBuffer data, final FrameMetadata frameMetadata, final GraphicOverlay graphicOverlay) {
-        latestImage = data;
-        latestImageMetaData = frameMetadata;
-        if (processingImage == null && processingMetaData == null) {
-            processLatestImage(graphicOverlay);
-        }
     }
 
     private synchronized void processLatestImage(final GraphicOverlay graphicOverlay) {
