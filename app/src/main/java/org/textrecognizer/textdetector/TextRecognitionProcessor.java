@@ -36,83 +36,85 @@ import org.textrecognizer.preference.PreferenceUtils;
 
 import java.util.List;
 
-/** Processor for the text detector demo. */
+/**
+ * Processor for the text detector demo.
+ */
 public class TextRecognitionProcessor extends VisionProcessorBase<Text> {
 
-  private static final String TAG = "TextRecProcessor";
+    private static final String TAG = "TextRecProcessor";
 
-  private final TextRecognizer textRecognizer;
-  private final Boolean shouldGroupRecognizedTextInBlocks;
-  private final Boolean showLanguageTag;
+    private final TextRecognizer textRecognizer;
+    private final Boolean shouldGroupRecognizedTextInBlocks;
+    private final Boolean showLanguageTag;
 
-  public TextRecognitionProcessor(
-      Context context, TextRecognizerOptionsInterface textRecognizerOptions) {
-    super(context);
-    shouldGroupRecognizedTextInBlocks = PreferenceUtils.shouldGroupRecognizedTextInBlocks(context);
-    showLanguageTag = PreferenceUtils.showLanguageTag(context);
-    textRecognizer = TextRecognition.getClient(textRecognizerOptions);
-  }
-
-  @Override
-  public void stop() {
-    super.stop();
-    textRecognizer.close();
-  }
-
-  @Override
-  protected Task<Text> detectInImage(InputImage image) {
-    return textRecognizer.process(image);
-  }
-
-  @Override
-  protected void onSuccess(@NonNull Text text) {
-    Log.d(TAG, "On-device Text detection successful");
-    logExtrasForTesting(text);
-  }
-
-  private static void logExtrasForTesting(Text text) {
-    if (text != null) {
-      Log.v(MANUAL_TESTING_LOG, "Detected text: " + text.getText());
-      Log.v(MANUAL_TESTING_LOG, "Detected text has : " + text.getTextBlocks().size() + " blocks");
-      for (int i = 0; i < text.getTextBlocks().size(); ++i) {
-        List<Line> lines = text.getTextBlocks().get(i).getLines();
-        Log.v(
-            MANUAL_TESTING_LOG,
-            String.format("Detected text block %d has %d lines", i, lines.size()));
-        for (int j = 0; j < lines.size(); ++j) {
-          List<Element> elements = lines.get(j).getElements();
-          Log.v(
-              MANUAL_TESTING_LOG,
-              String.format("Detected text line %d has %d elements", j, elements.size()));
-          for (int k = 0; k < elements.size(); ++k) {
-            Element element = elements.get(k);
-            Log.v(
-                MANUAL_TESTING_LOG,
-                String.format("Detected text element %d says: %s", k, element.getText()));
-            Log.v(
-                MANUAL_TESTING_LOG,
-                String.format(
-                    "Detected text element %d has a bounding box: %s",
-                    k, element.getBoundingBox().flattenToString()));
-            Log.v(
-                MANUAL_TESTING_LOG,
-                String.format(
-                    "Expected corner point size is 4, get %d", element.getCornerPoints().length));
-            for (Point point : element.getCornerPoints()) {
-              Log.v(
-                  MANUAL_TESTING_LOG,
-                  String.format(
-                      "Corner point for element %d is located at: x - %d, y = %d",
-                      k, point.x, point.y));
-            }
-          }
-        }
-      }
+    public TextRecognitionProcessor(
+            Context context, TextRecognizerOptionsInterface textRecognizerOptions) {
+        super(context);
+        shouldGroupRecognizedTextInBlocks = PreferenceUtils.shouldGroupRecognizedTextInBlocks(context);
+        showLanguageTag = PreferenceUtils.showLanguageTag(context);
+        textRecognizer = TextRecognition.getClient(textRecognizerOptions);
     }
-  }
 
-  @Override
-  protected void onFailure(@NonNull Exception e) {
-    Log.w(TAG, "Text detection failed." + e);
-  }
+    @Override
+    public void stop() {
+        super.stop();
+        textRecognizer.close();
+    }
+
+    @Override
+    protected Task<Text> detectInImage(InputImage image) {
+        return textRecognizer.process(image);
+    }
+
+    @Override
+    protected void onSuccess(@NonNull Text text) {
+        Log.d(TAG, "On-device Text detection successful");
+        logExtrasForTesting(text);
+    }
+
+    private static void logExtrasForTesting(Text text) {
+        if (text != null) {
+            Log.v(MANUAL_TESTING_LOG, "Detected text: " + text.getText());
+            Log.v(MANUAL_TESTING_LOG, "Detected text has : " + text.getTextBlocks().size() + " blocks");
+            for (int i = 0; i < text.getTextBlocks().size(); ++i) {
+                List<Line> lines = text.getTextBlocks().get(i).getLines();
+                Log.v(
+                        MANUAL_TESTING_LOG,
+                        String.format("Detected text block %d has %d lines", i, lines.size()));
+                for (int j = 0; j < lines.size(); ++j) {
+                    List<Element> elements = lines.get(j).getElements();
+                    Log.v(
+                            MANUAL_TESTING_LOG,
+                            String.format("Detected text line %d has %d elements", j, elements.size()));
+                    for (int k = 0; k < elements.size(); ++k) {
+                        Element element = elements.get(k);
+                        Log.v(
+                                MANUAL_TESTING_LOG,
+                                String.format("Detected text element %d says: %s", k, element.getText()));
+                        Log.v(
+                                MANUAL_TESTING_LOG,
+                                String.format(
+                                        "Detected text element %d has a bounding box: %s",
+                                        k, element.getBoundingBox().flattenToString()));
+                        Log.v(
+                                MANUAL_TESTING_LOG,
+                                String.format(
+                                        "Expected corner point size is 4, get %d", element.getCornerPoints().length));
+                        for (Point point : element.getCornerPoints()) {
+                            Log.v(
+                                    MANUAL_TESTING_LOG,
+                                    String.format(
+                                            "Corner point for element %d is located at: x - %d, y = %d",
+                                            k, point.x, point.y));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onFailure(@NonNull Exception e) {
+        Log.w(TAG, "Text detection failed." + e);
+    }
 }
