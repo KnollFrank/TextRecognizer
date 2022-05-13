@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class TextConverter {
 
-    public static String getText(final Text text) {
+    public static String getTextLeftToRight(final Text text) {
         return getElementStream(text)
                 .sorted(Comparator.comparingInt(element -> element.getBoundingBox().left))
                 .map(Text.Element::getText)

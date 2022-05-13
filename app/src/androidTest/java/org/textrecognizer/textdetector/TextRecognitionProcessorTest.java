@@ -39,7 +39,7 @@ public class TextRecognitionProcessorTest {
                     protected void onSuccess(@NonNull final Text text) {
                         super.onSuccess(text);
                         // Then
-                        assertThat(TextConverter.getText(text), is("9Dp1428"));
+                        assertThat(TextConverter.getTextLeftToRight(text), is("9Dp1428"));
                         signal.countDown();
                     }
 
@@ -75,7 +75,7 @@ public class TextRecognitionProcessorTest {
                     protected void onSuccess(@NonNull final Text text) {
                         super.onSuccess(text);
                         // Then
-                        final String textInImage = TextConverter.getText(text);
+                        final String textInImage = TextConverter.getTextLeftToRight(text);
                         Log.i(this.getClass().getSimpleName(), "FKK-TEXT: " + textInImage);
                         final FileOutputStream fileOutputStream = getFileOutputStream(new File(context.getFilesDir(), "captcha_image.txt"));
                         IOUtils.persist(textInImage, fileOutputStream);
