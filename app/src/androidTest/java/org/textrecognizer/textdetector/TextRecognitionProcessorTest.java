@@ -1,5 +1,7 @@
 package org.textrecognizer.textdetector;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 import static org.textrecognizer.common.IOUtils.getFileOutputStream;
 
@@ -27,7 +29,42 @@ public class TextRecognitionProcessorTest {
     @Test
     public void shouldDetectTextInImage() throws InterruptedException {
         // Given
-        final Context context = TestUtils.getContext();
+        final CountDownLatch signal = new CountDownLatch(1);
+        final TextRecognitionProcessor imageProcessor =
+                new TextRecognitionProcessor(
+                        TestUtils.getTargetContext(),
+                        new TextRecognizerOptions.Builder().build()) {
+
+                    @Override
+                    protected void onSuccess(@NonNull final Text text) {
+                        super.onSuccess(text);
+                        // Then
+                        assertThat(TextConverter.getText(text), is("9Dp1428"));
+                        signal.countDown();
+                    }
+
+                    @Override
+                    protected void onFailure(@NonNull final Exception e) {
+                        super.onFailure(e);
+                        // Then
+                        fail();
+                    }
+                };
+        final Bitmap captcha =
+                BitmapFactory.decodeStream(
+                        AssetsUtils.open(
+                                TestUtils.getContext().getAssets(),
+                                new File("captchas", "captchaImage1.jpeg")));
+
+        // When
+        imageProcessor.processBitmap(captcha);
+        signal.await();
+    }
+
+    @Test
+    public void detectTextInImage() throws InterruptedException {
+        // Given
+        final Context context = TestUtils.getTargetContext();
         final CountDownLatch signal = new CountDownLatch(1);
         final TextRecognitionProcessor imageProcessor =
                 new TextRecognitionProcessor(
@@ -38,10 +75,10 @@ public class TextRecognitionProcessorTest {
                     protected void onSuccess(@NonNull final Text text) {
                         super.onSuccess(text);
                         // Then
-                        Log.i(this.getClass().getSimpleName(), "FKK-TEXT: " + text.getText());
+                        final String textInImage = TextConverter.getText(text);
+                        Log.i(this.getClass().getSimpleName(), "FKK-TEXT: " + textInImage);
                         final FileOutputStream fileOutputStream = getFileOutputStream(new File(context.getFilesDir(), "captcha_image.txt"));
-                        IOUtils.persist(text.getText(), fileOutputStream);
-                        // assertThat(text.getText(), is("9\n5\n8\nF"));
+                        IOUtils.persist(textInImage, fileOutputStream);
                         signal.countDown();
                     }
 

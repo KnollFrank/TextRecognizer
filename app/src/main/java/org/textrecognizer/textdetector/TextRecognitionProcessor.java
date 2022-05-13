@@ -104,7 +104,7 @@ public class TextRecognitionProcessor extends VisionProcessorBase<Text> {
                             Log.v(
                                     MANUAL_TESTING_LOG,
                                     String.format(
-                                            "Corner point for element %d is located at: x - %d, y = %d",
+                                            "Corner point for element %d is located at: x = %d, y = %d",
                                             k, point.x, point.y));
                         }
                     }
