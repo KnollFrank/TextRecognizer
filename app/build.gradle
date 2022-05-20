@@ -41,6 +41,7 @@ android {
     androidResources {
         noCompress 'tflite'
     }
+    namespace 'org.textrecognizer'
 
     // Do NOT compress tflite model files (need to call out to developers!)
 }
